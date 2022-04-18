@@ -1,0 +1,69 @@
+variables:
+- name: tag
+  value: $(Build.BuildId)
+- name: imageName
+  value: dotnet/image
+- name: vmImage
+  value: ubuntu-latest
+- name: trivyVersion
+  value: 0.9.1
+#sonar_values---Description - add the name of your SonarQube service connection , add project name soo that you can see project on sonarqube by your given name.
+- name: sonar_connection
+  value: Sonarinstance
+- name: projectKey
+  value: 'dot_net'
+- name: projectName
+  value: 'dot_net'
+# sonar_quality_gate---Description - these values are needed for adding quality gate for SonarQube analysis,
+# add config file name of sonar quality gate,
+# sonarQube server name,project name ,and service token which you can create from SonarQube Portal
+- name: sonar_quality_file
+  value: sonar.ps1
+- name: SonarServerName
+  value: sonarserver.westus.azurecontainer.io:9000
+- name: SonarProjectKey
+  value: dot_net
+- name: SonarToken
+  value: 4a4ac3dea3b7d02deeb2729f63ce5912b5709f8d
+#SNYK_SCAN---Description--- add the name of service connection of SYNK Security scanner,and target file of the project where all dependencies info is present.
+- name: snyk_service_connection
+  value: 'snyk'
+- name: targetFile
+  value: 'WebGoatCore.sln'
+#AQUA_ENTERPRISE_IMAGE_REGISTRY_LOGIN--Description--add the name of service connection of aqua scanner login.
+- name: aqua_enterprise_scanner_login
+  value: 'aqua login'
+#docker_build---Description---add the name of service connection of Docker Registry for building Docker Images,add the repo name in which you want to store(registry/repository) the Docker Image.
+- name: docker_build_conn
+  value: 'JFROG_BUILD'
+- name: docker_repo
+  value: 'dotnet/image'
+#AQUA_TRIVY---Description---aqua image scanner for scanning Docker Image you can change severity for scanning by adding(CRITICAL,HIGH,MEDIUM,LOW),add the image name by which image is tagged after build.
+- name: aqua_severity
+  value: CRITICAL
+- name: aqua_trivy_image
+  value: demo1609.jfrog.io/$(imageName):$(tag)
+#AQUA_ENTERPRISE_CONN--Description---add image name for scanning , add scanner name , scanner token which you get from aqua portal , add service connection name of aqua enterprise.
+- name: aqua_image
+  value: 'demo1609.jfrog.io/$(imageName):$(tag)'
+- name: aqua_scanner_name
+  value: 'registry.aquasec.com/scanner-cli:6.5'
+- name: aqua_runOptions
+  value: '-e AQUA_TOKEN=edeba68e89fe975fec5ea66f65a427bdcebc3e36'
+- name: aqua_enterprise_conn
+  value: 'aqua connection'
+- name: customFlags
+  value: '--direct-cc'
+#JFrog_artifactory---Deacription---add the name of service connection of JFROG Artifactory,add the name of repository in which you want to push,add image name.
+- name: jfrog_conn
+  value: 'JFROG_PUSH'
+- name: jfrog_target_repo
+  value: 'dotnet'
+- name: JFROGimageName
+  value: 'demo1609.jfrog.io/dotnet/image:$(tag)'
+#HELM_update
+- name: temp_helm_name
+  value: kubernetes/dotnet-deployment-tmp.yaml
+- name: helm_name
+  value: kubernetes/dotnet-deployment.yaml
+#END-----------END------------END---------END
